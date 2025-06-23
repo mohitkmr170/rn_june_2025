@@ -3,8 +3,56 @@ PODS:
   - DoubleConversion (1.1.6)
   - fast_float (6.1.4)
   - FBLazyVector (0.79.3)
+  - Firebase/CoreOnly (11.13.0):
+    - FirebaseCore (~> 11.13.0)
+  - FirebaseCore (11.13.0):
+    - FirebaseCoreInternal (~> 11.13.0)
+    - GoogleUtilities/Environment (~> 8.1)
+    - GoogleUtilities/Logger (~> 8.1)
+  - FirebaseCoreInternal (11.13.0):
+    - "GoogleUtilities/NSData+zlib (~> 8.1)"
   - fmt (11.0.2)
   - glog (0.3.5)
+  - GoogleUtilities (8.1.0):
+    - GoogleUtilities/AppDelegateSwizzler (= 8.1.0)
+    - GoogleUtilities/Environment (= 8.1.0)
+    - GoogleUtilities/Logger (= 8.1.0)
+    - GoogleUtilities/MethodSwizzler (= 8.1.0)
+    - GoogleUtilities/Network (= 8.1.0)
+    - "GoogleUtilities/NSData+zlib (= 8.1.0)"
+    - GoogleUtilities/Privacy (= 8.1.0)
+    - GoogleUtilities/Reachability (= 8.1.0)
+    - GoogleUtilities/SwizzlerTestHelpers (= 8.1.0)
+    - GoogleUtilities/UserDefaults (= 8.1.0)
+  - GoogleUtilities/AppDelegateSwizzler (8.1.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Environment (8.1.0):
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Logger (8.1.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/MethodSwizzler (8.1.0):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Network (8.1.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Privacy
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (8.1.0)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (8.1.0)
+  - GoogleUtilities/Reachability (8.1.0):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/SwizzlerTestHelpers (8.1.0):
+    - GoogleUtilities/MethodSwizzler
+  - GoogleUtilities/UserDefaults (8.1.0):
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
   - hermes-engine (0.79.3):
     - hermes-engine/Pre-built (= 0.79.3)
   - hermes-engine/Pre-built (0.79.3)
@@ -1729,6 +1777,9 @@ PODS:
     - React-logger (= 0.79.3)
     - React-perflogger (= 0.79.3)
     - React-utils (= 0.79.3)
+  - RNFBApp (22.2.1):
+    - Firebase/CoreOnly (= 11.13.0)
+    - React-Core
   - RNScreens (4.11.1):
     - DoubleConversion
     - glog
@@ -1788,8 +1839,10 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - fast_float (from `../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
+  - FirebaseCoreInternal
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - GoogleUtilities
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -1856,11 +1909,16 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - Firebase
+    - FirebaseCore
+    - FirebaseCoreInternal
+    - GoogleUtilities
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -2005,6 +2063,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNFBApp:
+    :path: "../node_modules/@react-native-firebase/app"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   Yoga:
@@ -2015,8 +2075,12 @@ SPEC CHECKSUMS:
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: 06eeec4fe712a76acc9376682e4808b05ce978b6
   FBLazyVector: a62a7a5760929b6265e27bc01ab7598dde93ebd3
+  Firebase: 3435bc66b4d494c2f22c79fd3aae4c1db6662327
+  FirebaseCore: c692c7f1c75305ab6aff2b367f25e11d73aa8bd0
+  FirebaseCoreInternal: 29d7b3af4aaf0b8f3ed20b568c13df399b06f68c
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   hermes-engine: 94ed01537bdeccaab1adbf94b040d115d6fa1a7f
   RCT-Folly: 36fe2295e44b10d831836cc0d1daec5f8abcf809
   RCTDeprecation: c3e3f5b4ea83e7ff3bc86ce09e2a54b7affd687d
@@ -2081,10 +2145,11 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 552391af67c115d8ee20f9359711e7821145cd96
   ReactCodegen: 1807bcf4715beaa540417d139032b54e57cdd005
   ReactCommon: b7062f81f6ea61ec29e03aab1d439fb56c49372c
+  RNFBApp: 9ddaa4edee3ea7dfca8c866a4c1feca2439e2de6
   RNScreens: c2e3cc506212228c607b4785b315205e28acbf0f
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 645152fcc8359c80cdeb9be7a9e0d2e6c01304a4
 
-PODFILE CHECKSUM: 9063a68ef8c052a8900e91d1c1c7e13bc862d586
+PODFILE CHECKSUM: 964cac5da6d9fe6e142539af396cbe70fd8840ba
 
 COCOAPODS: 1.16.2
