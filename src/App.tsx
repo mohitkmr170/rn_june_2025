@@ -1,13 +1,16 @@
-import React from 'react';
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
+import React, {Suspense} from 'react';
+import {Text, useColorScheme, View} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Navigation from './Navigation';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
   };
 
   /**
@@ -17,13 +20,20 @@ function App(): React.JSX.Element {
   **/
   return (
     <View style={backgroundStyle}>
-      <Text style={styles.headerText}>React Native June 2025</Text>
+      <SafeAreaProvider>
+        <SafeAreaView style={{flex: 1}}>
+          <Suspense
+            fallback={
+              <View>
+                <Text>Loading...</Text>
+              </View>
+            }>
+            <Navigation />
+          </Suspense>
+        </SafeAreaView>
+      </SafeAreaProvider>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  headerText: {fontSize: 24},
-});
 
 export default App;
