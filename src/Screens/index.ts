@@ -1,2 +1,0 @@
-// Screen components
-export {};
