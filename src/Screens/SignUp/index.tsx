@@ -6,10 +6,11 @@ import {Button} from '../../Components';
 
 type FormData = {
   email: string;
+  fullName: string;
   password: string;
 };
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   const navigation = useNavigation();
   const {
     control,
@@ -52,6 +53,27 @@ const LoginScreen = () => {
         )}
         <Controller
           control={control}
+          name="fullName"
+          rules={{
+            required: 'Full name is required!',
+          }}
+          render={({field: {onChange, value}}) => {
+            return (
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize={'words'}
+                placeholder="Full Name"
+              />
+            );
+          }}
+        />
+        {errors.fullName?.message && (
+          <Text style={styles.error}>{errors.fullName.message}</Text>
+        )}
+        <Controller
+          control={control}
           name="password"
           rules={{
             required: 'Password is required!',
@@ -78,14 +100,14 @@ const LoginScreen = () => {
           <Text style={styles.error}>{errors.password.message}</Text>
         )}
       </View>
-      <Button title="Login" onPress={handleSubmit(onSubmit)} />
+      <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
       <Pressable
-        title="SignUp"
-        onPress={() => (navigation as any).navigate('SignUp')}
+        title="Login"
+        onPress={() => navigation.goBack()}
         color={'#000000'}
       />
     </View>
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;

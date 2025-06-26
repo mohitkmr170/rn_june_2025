@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const HomeScreen = lazy(() => import('../Screens/Home'));
 const LoginScreen = lazy(() => import('../Screens/Login'));
+const SignUpScreen = lazy(() => import('../Screens/SignUp'));
 
 const RootStack = createNativeStackNavigator({
   initialRouteName: 'Login',
@@ -13,6 +14,9 @@ const RootStack = createNativeStackNavigator({
   screens: {
     Login: {
       screen: LoginScreen,
+    },
+    SignUp: {
+      screen: SignUpScreen,
     },
     Home: {
       screen: HomeScreen,
