@@ -1,9 +1,10 @@
-import React, {Suspense} from 'react';
-import {Text, useColorScheme, View} from 'react-native';
+import React from 'react';
+import {StyleSheet, useColorScheme, View} from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Navigation from './Navigation';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import Navigator from './Navigation';
+import {AuthProvider} from './Providers/AuthProvider';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -13,27 +14,21 @@ function App(): React.JSX.Element {
     flex: 1,
   };
 
-  /**
-  TODO : 👇
-  1. Add safeAreaView
-  2. StatusBar color based on selected theme
-  **/
   return (
     <View style={backgroundStyle}>
       <SafeAreaProvider>
-        <SafeAreaView style={{flex: 1}}>
-          <Suspense
-            fallback={
-              <View>
-                <Text>Loading...</Text>
-              </View>
-            }>
-            <Navigation />
-          </Suspense>
+        <SafeAreaView style={styles.parentContainer}>
+          <AuthProvider>
+            <Navigator />
+          </AuthProvider>
         </SafeAreaView>
       </SafeAreaProvider>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  parentContainer: {flex: 1},
+});
 
 export default App;

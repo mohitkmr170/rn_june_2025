@@ -3,6 +3,7 @@ import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from 'react-hook-form';
 import {Button} from '../../Components';
+import {getAuth, signInWithEmailAndPassword} from '@react-native-firebase/auth';
 
 type FormData = {
   email: string;
@@ -17,8 +18,18 @@ const LoginScreen = () => {
     formState: {errors},
   } = useForm<FormData>();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     console.log(data);
+    try {
+      const userCreds = await signInWithEmailAndPassword(
+        getAuth(),
+        data.email,
+        data.password,
+      );
+      return userCreds?.user;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
