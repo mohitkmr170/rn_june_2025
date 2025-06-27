@@ -4,9 +4,15 @@ import {LoadingIndicator} from '../Components/LoadingIndicator';
 
 interface AuthContextType {
   user: any;
+  guest: boolean;
+  setGuest: (isGuest: boolean) => void;
 }
 
-export const AuthContext = createContext<AuthContextType>({user: null});
+export const AuthContext = createContext<AuthContextType>({
+  user: null,
+  guest: false,
+  setGuest: () => {},
+});
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -14,6 +20,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
   const [user, setUser] = useState(null);
+  const [guest, setGuest] = useState(false);
   const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
@@ -31,5 +38,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
     return <LoadingIndicator />;
   }
 
-  return <AuthContext.Provider value={{user}}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{user, guest, setGuest}}>
+      {children}
+    </AuthContext.Provider>
+  );
 };

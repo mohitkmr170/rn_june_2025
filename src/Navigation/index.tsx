@@ -6,6 +6,14 @@ import {AuthContext} from '../Providers/AuthProvider';
 const HomeScreen = lazy(() => import('../Screens/Home'));
 const LoginScreen = lazy(() => import('../Screens/Login'));
 const SignUpScreen = lazy(() => import('../Screens/SignUp'));
+const GuestWelcomeScreen = lazy(() => import('../Screens/GuestWelcomeScreen'));
+
+export type RootStackParamList = {
+  Login: undefined;
+  SignUp: undefined;
+  Home: undefined;
+  GuestWelcome: undefined;
+};
 
 const Stack = createNativeStackNavigator();
 
@@ -30,13 +38,25 @@ function AppStack() {
   );
 }
 
+function GuestStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="GuestWelcome"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="GuestWelcome" component={GuestWelcomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
 const Navigator = () => {
-  const {user} = useContext(AuthContext);
+  const {user, guest} = useContext(AuthContext);
   console.log(user);
 
   return (
     <NavigationContainer>
-      <Suspense fallback={null}>{user ? <AppStack /> : <AuthStack />}</Suspense>
+      <Suspense fallback={null}>
+        {user ? <AppStack /> : guest ? <GuestStack /> : <AuthStack />}
+      </Suspense>
     </NavigationContainer>
   );
 };

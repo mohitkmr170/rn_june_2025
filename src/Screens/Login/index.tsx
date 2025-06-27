@@ -4,6 +4,8 @@ import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from 'react-hook-form';
 import {Button} from '../../Components';
 import {getAuth, signInWithEmailAndPassword} from '@react-native-firebase/auth';
+import {useContext} from 'react';
+import {AuthContext} from '../../Providers/AuthProvider';
 
 type FormData = {
   email: string;
@@ -17,6 +19,7 @@ const LoginScreen = () => {
     handleSubmit,
     formState: {errors},
   } = useForm<FormData>();
+  const {setGuest} = useContext(AuthContext);
 
   const onSubmit = async (data: any) => {
     console.log(data);
@@ -34,6 +37,7 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.parentContainer}>
+      <Pressable title="Continue as Guest" onPress={() => setGuest(true)} />
       <View style={styles.formContainer}>
         <Controller
           control={control}
