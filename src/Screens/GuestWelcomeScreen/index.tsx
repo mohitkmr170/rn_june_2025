@@ -1,25 +1,17 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {getAuth, signOut} from '@react-native-firebase/auth';
 
-const HomeScreen = () => {
+const GuestWelcomeScreen = () => {
   const navigation = useNavigation();
-
-  const handleLogOut = async () => {
-    await signOut(getAuth());
-  };
 
   return (
     <View style={styles.parentContainer}>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text>Home Screen</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleLogOut()}>
-        <Text>Log Out</Text>
+        <Text>Guest Welcome Screen</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default HomeScreen;
+export default GuestWelcomeScreen;

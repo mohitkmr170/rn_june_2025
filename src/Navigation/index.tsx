@@ -1,25 +1,64 @@
-import {lazy} from 'react';
-import {createStaticNavigation} from '@react-navigation/native';
+import React, {lazy, useContext, Suspense} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+import {AuthContext} from '../Providers/AuthProvider';
 
 const HomeScreen = lazy(() => import('../Screens/Home'));
 const LoginScreen = lazy(() => import('../Screens/Login'));
+const SignUpScreen = lazy(() => import('../Screens/SignUp'));
+const GuestWelcomeScreen = lazy(() => import('../Screens/GuestWelcomeScreen'));
 
-const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Login',
-  screenOptions: {
-    headerShown: false,
-  },
-  screens: {
-    Login: {
-      screen: LoginScreen,
-    },
-    Home: {
-      screen: HomeScreen,
-    },
-  },
-});
+export type RootStackParamList = {
+  Login: undefined;
+  SignUp: undefined;
+  Home: undefined;
+  GuestWelcome: undefined;
+};
 
-const Navigation = createStaticNavigation(RootStack);
+const Stack = createNativeStackNavigator();
 
-export default Navigation;
+function AuthStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function AppStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Home" component={HomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function GuestStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="GuestWelcome"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="GuestWelcome" component={GuestWelcomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
+const Navigator = () => {
+  const {user, guest} = useContext(AuthContext);
+  console.log(user);
+
+  return (
+    <NavigationContainer>
+      <Suspense fallback={null}>
+        {user ? <AppStack /> : guest ? <GuestStack /> : <AuthStack />}
+      </Suspense>
+    </NavigationContainer>
+  );
+};
+
+export default Navigator;

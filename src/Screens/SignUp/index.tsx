@@ -3,33 +3,39 @@ import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from 'react-hook-form';
 import {Button} from '../../Components';
-import {getAuth, signInWithEmailAndPassword} from '@react-native-firebase/auth';
-import {useContext} from 'react';
-import {AuthContext} from '../../Providers/AuthProvider';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  updateProfile,
+} from '@react-native-firebase/auth';
 
 type FormData = {
   email: string;
+  fullName: string;
   password: string;
 };
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   const navigation = useNavigation();
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm<FormData>();
-  const {setGuest} = useContext(AuthContext);
 
   const onSubmit = async (data: any) => {
     console.log(data);
     try {
-      const userCreds = await signInWithEmailAndPassword(
+      const userCreds = await createUserWithEmailAndPassword(
         getAuth(),
-        data.email,
-        data.password,
+        data?.email,
+        data?.password,
       );
-      return userCreds?.user;
+      if (userCreds) {
+        await updateProfile(userCreds?.user, {
+          displayName: data?.fullName,
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +43,6 @@ const LoginScreen = () => {
 
   return (
     <View style={styles.parentContainer}>
-      <Pressable title="Continue as Guest" onPress={() => setGuest(true)} />
       <View style={styles.formContainer}>
         <Controller
           control={control}
@@ -67,6 +72,27 @@ const LoginScreen = () => {
         )}
         <Controller
           control={control}
+          name="fullName"
+          rules={{
+            required: 'Full name is required!',
+          }}
+          render={({field: {onChange, value}}) => {
+            return (
+              <TextInput
+                style={styles.inputContainer}
+                onChangeText={onChange}
+                value={value}
+                autoCapitalize={'words'}
+                placeholder="Full Name"
+              />
+            );
+          }}
+        />
+        {errors.fullName?.message && (
+          <Text style={styles.error}>{errors.fullName.message}</Text>
+        )}
+        <Controller
+          control={control}
           name="password"
           rules={{
             required: 'Password is required!',
@@ -93,14 +119,14 @@ const LoginScreen = () => {
           <Text style={styles.error}>{errors.password.message}</Text>
         )}
       </View>
-      <Button title="Login" onPress={handleSubmit(onSubmit)} />
+      <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
       <Pressable
-        title="SignUp"
-        onPress={() => (navigation as any).navigate('SignUp')}
+        title="Login"
+        onPress={() => navigation.goBack()}
         color={'#000000'}
       />
     </View>
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;
