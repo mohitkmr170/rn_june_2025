@@ -1,14 +1,22 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from 'react-native';
 
-interface IButton {
+interface IButton extends TouchableOpacityProps {
   title: string;
   onPress: () => void;
 }
 
-export const Button = (props: IButton) => {
+export const Button: React.FC<IButton> = ({title, onPress, ...rest}) => {
   return (
-    <TouchableOpacity onPress={props?.onPress} style={styles.buttonContainer}>
-      <Text style={styles.buttonTitle}>{props?.title}</Text>
+    <TouchableOpacity
+      onPress={onPress}
+      style={styles.buttonContainer}
+      {...rest}>
+      <Text style={styles.buttonTitle}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -20,6 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 12,
     borderRadius: 8,
+    marginVertical: 4,
   },
   buttonTitle: {fontSize: 18, lineHeight: 22, color: '#ffffff'},
 });

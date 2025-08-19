@@ -1,4 +1,4 @@
-import {Text, TextInput, View, Button as Pressable} from 'react-native';
+import {Text, TextInput, View} from 'react-native';
 import {styles} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {Controller, useForm} from 'react-hook-form';
@@ -120,11 +120,7 @@ const SignUpScreen = () => {
         )}
       </View>
       <Button title="Sign Up" onPress={handleSubmit(onSubmit)} />
-      <Pressable
-        title="Login"
-        onPress={() => navigation.goBack()}
-        color={'#000000'}
-      />
+      <Button title="Login" onPress={() => navigation.goBack()} />
     </View>
   );
 };

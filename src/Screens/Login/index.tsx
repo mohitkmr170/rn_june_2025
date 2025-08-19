@@ -94,10 +94,9 @@ const LoginScreen = () => {
         )}
       </View>
       <Button title="Login" onPress={handleSubmit(onSubmit)} />
-      <Pressable
+      <Button
         title="SignUp"
         onPress={() => (navigation as any).navigate('SignUp')}
-        color={'#000000'}
       />
     </View>
   );
