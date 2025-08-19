@@ -1,6 +1,6 @@
 import React, {createContext, useEffect, useState} from 'react';
 import {onAuthStateChanged, getAuth} from '@react-native-firebase/auth';
-import {LoadingIndicator} from '../Components/LoadingIndicator';
+import {LoadingIndicator} from '../Components';
 
 interface AuthContextType {
   user: any;

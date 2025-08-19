@@ -2,11 +2,16 @@ import React, {lazy, useContext, Suspense} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from '../Providers/AuthProvider';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Header} from '../Components';
 
 const HomeScreen = lazy(() => import('../Screens/Home'));
 const LoginScreen = lazy(() => import('../Screens/Login'));
 const SignUpScreen = lazy(() => import('../Screens/SignUp'));
 const GuestWelcomeScreen = lazy(() => import('../Screens/GuestWelcomeScreen'));
+const Tab2 = lazy(() => import('../Screens/Tab2'));
+const Tab3 = lazy(() => import('../Screens/Tab3'));
+const SampleScreen = lazy(() => import('../Screens/SampleScreen'));
 
 export type RootStackParamList = {
   Login: undefined;
@@ -14,6 +19,19 @@ export type RootStackParamList = {
   Home: undefined;
   GuestWelcome: undefined;
 };
+
+const Tab = createBottomTabNavigator();
+
+function TabNavigator() {
+  return (
+    <Tab.Navigator
+      screenOptions={{headerShown: false, tabBarActiveTintColor: '#5b4bac'}}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Tab2" component={Tab2} />
+      <Tab.Screen name="Tab3" component={Tab3} />
+    </Tab.Navigator>
+  );
+}
 
 const Stack = createNativeStackNavigator();
 
@@ -28,12 +46,17 @@ function AuthStack() {
   );
 }
 
+const CustomHeader = (props: any) => <Header {...props} />;
+
 function AppStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={HomeScreen} />
+      initialRouteName="Tab"
+      screenOptions={{
+        header: CustomHeader,
+      }}>
+      <Stack.Screen name="Tab" component={TabNavigator} />
+      <Stack.Screen name="Sample" component={SampleScreen} />
     </Stack.Navigator>
   );
 }
