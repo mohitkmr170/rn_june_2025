@@ -4,14 +4,16 @@ import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from '../Providers/AuthProvider';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Header} from '../Components';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 const HomeScreen = lazy(() => import('../Screens/Home'));
 const LoginScreen = lazy(() => import('../Screens/Login'));
 const SignUpScreen = lazy(() => import('../Screens/SignUp'));
-const GuestWelcomeScreen = lazy(() => import('../Screens/GuestWelcomeScreen'));
-const Tab2 = lazy(() => import('../Screens/Tab2'));
-const Tab3 = lazy(() => import('../Screens/Tab3'));
-const SampleScreen = lazy(() => import('../Screens/SampleScreen'));
+const GuestScreen = lazy(() => import('../Screens/Guest'));
+const Tab2Screen = lazy(() => import('../Screens/Tab2'));
+const ProfileScreen = lazy(() => import('../Screens/Profile'));
+const SampleScreen = lazy(() => import('../Screens/Sample'));
+const SettingsScreen = lazy(() => import('../Screens/Settings'));
 
 export type RootStackParamList = {
   Login: undefined;
@@ -27,8 +29,8 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={{headerShown: false, tabBarActiveTintColor: '#5b4bac'}}>
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Tab2" component={Tab2} />
-      <Tab.Screen name="Tab3" component={Tab3} />
+      <Tab.Screen name="Tab2" component={Tab2Screen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
@@ -56,8 +58,24 @@ function AppStack() {
         header: CustomHeader,
       }}>
       <Stack.Screen name="Tab" component={TabNavigator} />
-      <Stack.Screen name="Sample" component={SampleScreen} />
     </Stack.Navigator>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+function AppDrawer() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+        drawerType: 'front',
+        drawerStyle: {width: 300},
+      }}>
+      <Drawer.Screen name="Main" component={AppStack} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Sample" component={SampleScreen} />
+    </Drawer.Navigator>
   );
 }
 
@@ -66,7 +84,7 @@ function GuestStack() {
     <Stack.Navigator
       initialRouteName="GuestWelcome"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name="GuestWelcome" component={GuestWelcomeScreen} />
+      <Stack.Screen name="GuestWelcome" component={GuestScreen} />
     </Stack.Navigator>
   );
 }
@@ -78,7 +96,7 @@ const Navigator = () => {
   return (
     <NavigationContainer>
       <Suspense fallback={null}>
-        {user ? <AppStack /> : guest ? <GuestStack /> : <AuthStack />}
+        {user ? <AppDrawer /> : guest ? <GuestStack /> : <AuthStack />}
       </Suspense>
     </NavigationContainer>
   );

@@ -1,14 +1,31 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {
+  DrawerActions,
+  getFocusedRouteNameFromRoute,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-interface IHeader {
-  route?: any;
-}
+interface IHeader {}
 
-export const Header: React.FC<IHeader> = ({route}) => {
+export const Header: React.FC<IHeader> = () => {
+  const route = useRoute();
+  const navigation = useNavigation();
+
+  const handleLeftCTAClick = () => {
+    if (route?.name !== 'Tab') {
+      navigation?.goBack();
+    } else {
+      navigation?.dispatch(DrawerActions?.openDrawer());
+    }
+  };
+
   return (
     <View style={styles.parentContainer}>
-      <Text>Left</Text>
-      <Text>{route?.name}</Text>
+      <TouchableOpacity onPress={() => handleLeftCTAClick()}>
+        <Text>{route?.name !== 'Tab' ? 'Back' : 'Drawer'}</Text>
+      </TouchableOpacity>
+      <Text>{getFocusedRouteNameFromRoute(route) ?? route?.name}</Text>
       <Text>Right</Text>
     </View>
   );
@@ -21,5 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#5b4bac',
+    alignItems: 'center',
   },
 });
