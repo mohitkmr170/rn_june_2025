@@ -14,11 +14,9 @@ export default function List() {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch(
-          'https://jsonplaceholder.typicode.com/posts?userId=1',
-        );
+        const res = await fetch('https://dummyjson.com/posts');
         const json = await res.json();
-        setData(json);
+        setData(json?.posts);
       } catch (err) {
         setError(err instanceof Error ? err : new Error(String(err)));
       } finally {
@@ -30,12 +28,31 @@ export default function List() {
   }, []);
 
   const renderPostItem = ({item}: any) => {
-    console.log('item => ', item);
     return (
       <View style={styles.postListItemContainer}>
-        <Text>{item?.id}</Text>
-        <Text style={styles.postListItemTitleText}>{item?.title}</Text>
-        <Text style={styles.postListItemBodyText}>{item?.body}</Text>
+        <View>
+          <Text style={styles.postListItemTitleText}>{item?.title}</Text>
+          <Text style={styles.postListItemBodyText} numberOfLines={4}>
+            {item?.body}
+          </Text>
+        </View>
+        <View style={styles.tagContainer}>
+          <Text>
+            🌐{' '}
+            {item?.tags.map((tagTtem: string) => (
+              <Text>{tagTtem} </Text>
+            ))}
+          </Text>
+        </View>
+        <View style={styles.reactionsContainer}>
+          <Text>👀 {item?.views}</Text>
+          <View style={styles.reactionsInnerContainer}>
+            <Text>👍 {item?.reactions?.likes}</Text>
+            <Text style={styles.dislikeText}>
+              👎 {item?.reactions?.dislikes}
+            </Text>
+          </View>
+        </View>
       </View>
     );
   };
