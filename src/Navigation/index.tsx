@@ -14,6 +14,7 @@ const Tab2Screen = lazy(() => import('../Screens/Tab2'));
 const ProfileScreen = lazy(() => import('../Screens/Profile'));
 const SampleScreen = lazy(() => import('../Screens/Sample'));
 const SettingsScreen = lazy(() => import('../Screens/Settings'));
+const ListScreen = lazy(() => import('../Screens/List'));
 
 export type RootStackParamList = {
   Login: undefined;
@@ -67,12 +68,14 @@ const Drawer = createDrawerNavigator();
 function AppDrawer() {
   return (
     <Drawer.Navigator
+      initialRouteName="List"
       screenOptions={{
         headerShown: false,
         drawerType: 'front',
         drawerStyle: {width: 300},
       }}>
       <Drawer.Screen name="Main" component={AppStack} />
+      <Drawer.Screen name="List" component={ListScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Sample" component={SampleScreen} />
     </Drawer.Navigator>
