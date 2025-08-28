@@ -1,4 +1,4 @@
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {Header} from '../../Components';
 import {styles} from './styles';
 import {useCallback, useEffect} from 'react';
@@ -13,9 +13,13 @@ const StoriesScreen = () => {
     story: {stories},
   } = useSelector((state: any) => state);
 
-  useEffect(() => {
+  const fetchStoryIds = useCallback(() => {
     dispatch(fetchTopStories());
   }, [dispatch]);
+
+  useEffect(() => {
+    fetchStoryIds();
+  }, [fetchStoryIds]);
 
   const renderItem = useCallback(
     ({item}: {item: any}) => <RenderStorries id={item} />,
@@ -28,7 +32,14 @@ const StoriesScreen = () => {
     <View style={styles.parentContainer}>
       <Header />
       <View style={styles.mainContainer}>
-        <Text style={styles.headerText}>StoriesScreen</Text>
+        <View style={styles.mainTopContainer}>
+          <Text style={styles.headerText}>StoriesScreen</Text>
+          <TouchableOpacity>
+            <Text style={styles.refreshText} onPress={() => fetchStoryIds()}>
+              Refresh
+            </Text>
+          </TouchableOpacity>
+        </View>
         {stories?.loading ? (
           <Loader />
         ) : (

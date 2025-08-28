@@ -6,11 +6,21 @@ export const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    margin: 8,
+  },
+  mainTopContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#FFE7C7',
+    padding: 8,
+  },
+  refreshText: {
+    borderWidth: 1,
+    borderColor: '#000',
+    padding: 8,
+    borderRadius: 12,
   },
   headerText: {
-    borderBlockColor: '#000',
-    borderBottomWidth: 1,
     textAlign: 'center',
     fontSize: 32,
     lineHeight: 36,

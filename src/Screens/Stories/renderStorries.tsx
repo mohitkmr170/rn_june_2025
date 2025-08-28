@@ -2,8 +2,18 @@ import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {getStory} from '../../API/Stories/getStory';
 
-function RenderStorries({id}: {id: any}) {
-  const [data, setData] = useState<any>(null);
+type data = {
+  title: string;
+  type: string;
+  by: string;
+};
+
+interface IRenderStorriesProps {
+  id: number;
+}
+
+function RenderStorries({id}: IRenderStorriesProps) {
+  const [data, setData] = useState<data>();
   const [loading, setLoading] = useState(Boolean);
 
   useEffect(() => {
