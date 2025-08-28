@@ -1,32 +1,55 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchStory} from '../../Store/Slices/stories';
+import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {getStory} from '../../API/Stories/getStory';
 
 function RenderStorries({id}: {id: any}) {
-  const dispatch = useDispatch<any>();
-
-  const {
-    story: {story},
-  } = useSelector((state: any) => state);
-
-  console.log('here2', story);
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(Boolean);
 
   useEffect(() => {
-    if (!story.data && !story?.loading) {
-      dispatch(fetchStory(id));
-    }
-  }, [dispatch, id, story, story?.loading]);
+    const fetchStoryData = async () => {
+      setLoading(true);
+      let story = await getStory(id);
+      setData(story);
+      setLoading(false);
+    };
+    fetchStoryData();
+  }, [id]);
 
   return (
     <View style={style.parentContainer}>
-      <Text>{story?.data?.title}</Text>
+      {loading ? (
+        <View style={style.loaderContainer}>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        <>
+          <Text style={style.parentText}>
+            <Text style={style.childText}>Title : </Text>
+            {data?.title}
+          </Text>
+          <View style={style.mainContainer}>
+            <Text style={style.parentText}>
+              <Text style={style.childText}>Type : </Text>
+              {data?.type}
+            </Text>
+            <Text style={style.parentText}>
+              <Text style={style.childText}>By : </Text>
+              {data?.by}
+            </Text>
+          </View>
+        </>
+      )}
     </View>
   );
 }
 
 const style = StyleSheet.create({
-  parentContainer: {height: 100, borderWidth: 0.2, borderColor: '#000000'},
+  parentContainer: {borderColor: '#000', borderWidth: 0.2, padding: 18},
+  loaderContainer: {justifyContent: 'center', alignItems: 'center'},
+  parentText: {fontSize: 16, lineHeight: 22},
+  childText: {fontWeight: 'bold'},
+  mainContainer: {flexDirection: 'row', justifyContent: 'space-between'},
 });
 
 export default React.memo(RenderStorries);

@@ -24,20 +24,17 @@ const StoriesScreen = () => {
 
   const keyExtractor = useCallback((id: number) => String(id), []);
 
-  let x = stories?.data?.slice(0, 10);
-  console.log('here1', x);
-
   return (
     <View style={styles.parentContainer}>
       <Header />
       <View style={styles.mainContainer}>
-        <Text>StoriesScreen</Text>
+        <Text style={styles.headerText}>StoriesScreen</Text>
         {stories?.loading ? (
           <Loader />
         ) : (
           <View>
             <FlatList
-              data={x}
+              data={stories?.data}
               renderItem={renderItem}
               initialNumToRender={10}
               maxToRenderPerBatch={10}
