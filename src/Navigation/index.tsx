@@ -15,6 +15,7 @@ const ProfileScreen = lazy(() => import('../Screens/Profile'));
 const SampleScreen = lazy(() => import('../Screens/Sample'));
 const SettingsScreen = lazy(() => import('../Screens/Settings'));
 const ListScreen = lazy(() => import('../Screens/List'));
+const MemoCallbackScreen = lazy(() => import('../Screens/MemoCallback'));
 
 export type RootStackParamList = {
   Login: undefined;
@@ -68,7 +69,7 @@ const Drawer = createDrawerNavigator();
 function AppDrawer() {
   return (
     <Drawer.Navigator
-      initialRouteName="List"
+      initialRouteName="Main"
       screenOptions={{
         headerShown: false,
         drawerType: 'front',
@@ -78,6 +79,7 @@ function AppDrawer() {
       <Drawer.Screen name="List" component={ListScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="Sample" component={SampleScreen} />
+      <Stack.Screen name="MemoCallback" component={MemoCallbackScreen} />
     </Drawer.Navigator>
   );
 }
