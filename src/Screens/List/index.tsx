@@ -11,7 +11,9 @@ export default function List() {
   const [limit, setLimit] = useState('10');
   const [skip, setSkip] = useState('0');
   const dispatch = useDispatch<any>();
-  const {posts, loading} = useSelector((state: any) => state);
+  const {
+    post: {posts, loading},
+  } = useSelector((state: any) => state);
 
   useEffect(() => {
     // dispatch(getPosts({})); //fetch all

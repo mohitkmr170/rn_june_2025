@@ -12,7 +12,7 @@ const SignUpScreen = lazy(() => import('../Screens/SignUp'));
 const GuestScreen = lazy(() => import('../Screens/Guest'));
 const Tab2Screen = lazy(() => import('../Screens/Tab2'));
 const ProfileScreen = lazy(() => import('../Screens/Profile'));
-const SampleScreen = lazy(() => import('../Screens/Sample'));
+const StoriesScreen = lazy(() => import('../Screens/Stories'));
 const SettingsScreen = lazy(() => import('../Screens/Settings'));
 const ListScreen = lazy(() => import('../Screens/List'));
 const MemoCallbackScreen = lazy(() => import('../Screens/MemoCallback'));
@@ -78,7 +78,7 @@ function AppDrawer() {
       <Drawer.Screen name="Main" component={AppStack} />
       <Drawer.Screen name="List" component={ListScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="Sample" component={SampleScreen} />
+      <Stack.Screen name="Stories" component={StoriesScreen} />
       <Stack.Screen name="MemoCallback" component={MemoCallbackScreen} />
     </Drawer.Navigator>
   );
